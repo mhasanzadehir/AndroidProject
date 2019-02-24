@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ir.sharif.androidproject.model.Item
 import ir.sharif.androidproject.repository.DataRepository
 import ir.sharif.androidproject.R
+import ir.sharif.androidproject.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_layout.*
 import kotlinx.android.synthetic.main.item_layout.view.*
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         val view:View = LayoutInflater.from(this).inflate(R.layout.item_layout, null)
         view.titleTextView.text = item.title
         view.subtitleTextView.text = item.subTitle
-        //TODO load image with Glide library
+        view.image.loadUrl(item.image)
         return view
     }
 
