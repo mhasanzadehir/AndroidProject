@@ -1,11 +1,6 @@
 package ir.sharif.androidproject.repository
 
-import ir.sharif.androidproject.model.Item
-
-/**
- *  @Author: MahdiHS
- *  @Date:   24/02/2019
- */
+import ir.sharif.androidproject.models.Item
 
 val INITIAL_DATA = arrayListOf(
     Item("Mahdi Hasanzadeh", "Hi Bro!", ""),
@@ -30,5 +25,4 @@ object DataRepository {
     fun clear() = list.clear()
 
     fun refresh() = list.clear().apply { list.addAll(INITIAL_DATA) }
-
 }
