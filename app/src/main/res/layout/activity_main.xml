@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".MainActivity"
+                android:padding="36dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/clearButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/clear_list"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/refreshButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/refresh_list"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/fetchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fetch_data"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonsLayout"
+            android:orientation="vertical"/>
+
 
 </RelativeLayout>

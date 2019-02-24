@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">AndroidProject</string>
+    <string name="clear_list">Clear List</string>
+    <string name="refresh_list">Refresh List</string>
+    <string name="fetch_data">Fetch Data</string>
 </resources>
