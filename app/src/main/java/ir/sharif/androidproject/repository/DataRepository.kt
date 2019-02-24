@@ -29,7 +29,6 @@ object DataRepository {
 
     fun clear() = list.clear()
 
-    fun refresh() {
-        list = INITIAL_DATA
-    }
+    fun refresh() = list.clear().apply { list.addAll(INITIAL_DATA) }
+
 }

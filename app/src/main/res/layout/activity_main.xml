@@ -13,19 +13,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true">
 
-        <com.google.android.material.button.MaterialButton
+        <Button
                 android:id="@+id/clearButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/clear_list"/>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
                 android:id="@+id/refreshButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/refresh_list"/>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
                 android:id="@+id/fetchButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,10 +35,10 @@
 
     <LinearLayout
             android:id="@+id/list"
+            android:layout_below="@id/buttonsLayout"
             android:layout_width="match_parent"
             android:layout_marginTop="12dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/buttonsLayout"
             android:orientation="vertical"/>
 
 
