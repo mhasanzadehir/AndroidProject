@@ -1,4 +1,4 @@
-package ir.sharif.androidproject.models
+package ir.sharif.androidproject.managers
 
 object ConnectionManager {
     fun load(n: Int): List<Int> {

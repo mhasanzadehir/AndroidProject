@@ -1,4 +1,4 @@
-package ir.sharif.androidproject.models
+package ir.sharif.androidproject.managers
 
 object StorageManager {
     fun load(): List<Int> {
