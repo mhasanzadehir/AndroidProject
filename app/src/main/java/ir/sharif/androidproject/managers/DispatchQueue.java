@@ -68,19 +68,10 @@ public class DispatchQueue extends Thread {
         }
     }
 
-    public void handleMessage(Message inputMessage) {
-
-    }
-
     @Override
     public void run() {
         Looper.prepare();
-        handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                DispatchQueue.this.handleMessage(msg);
-            }
-        };
+        handler = new Handler();
         syncLatch.countDown();
         Looper.loop();
     }
