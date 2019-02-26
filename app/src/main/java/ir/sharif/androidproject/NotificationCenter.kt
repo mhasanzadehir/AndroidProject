@@ -1,4 +1,7 @@
-package ir.sharif.androidproject.models
+package ir.sharif.androidproject
+
+import ir.sharif.androidproject.models.Notification
+import ir.sharif.androidproject.models.NotificationType
 
 object NotificationCenter {
     interface NotificationCenterDelegate {

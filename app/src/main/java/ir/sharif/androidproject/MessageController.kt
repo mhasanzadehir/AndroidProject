@@ -1,4 +1,4 @@
-package ir.sharif.androidproject.models
+package ir.sharif.androidproject
 
 object MessageController {
     private val cache = mutableListOf<Int>()
