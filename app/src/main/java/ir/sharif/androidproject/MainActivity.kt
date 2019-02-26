@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ir.sharif.androidproject.models.Item
-import ir.sharif.androidproject.models.Notification
-import ir.sharif.androidproject.models.NotificationType
+import ir.sharif.androidproject.models.Advertisement
+import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.repository.DataRepository
+import ir.sharif.androidproject.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_layout.view.*
 
-class MainActivity : AppCompatActivity(), NotificationCenter.NotificationCenterDelegate {
+class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -22,16 +24,16 @@ class MainActivity : AppCompatActivity(), NotificationCenter.NotificationCenterD
 
     override fun onResume() {
         super.onResume()
-        NotificationCenter.subscribe(this, NotificationType.DATA_LOADED)
+        Advertiser.subscribe(this, AdvertisementType.DATA_LOADED)
     }
 
     override fun onPause() {
         super.onPause()
-        NotificationCenter.unSubscribe(this, NotificationType.DATA_LOADED)
+        Advertiser.unSubscribe(this, AdvertisementType.DATA_LOADED)
     }
 
-    override fun receiveData(notification: Notification) {
-        Log.i(TAG, notification.content)
+    override fun receiveData(advertisement: Advertisement) {
+        Log.i(TAG, advertisement.data.toString())
     }
 
     private fun clearList() {

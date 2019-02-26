@@ -1,17 +1,12 @@
 package ir.sharif.androidproject.managers
 
-import android.util.Range
-import ir.sharif.androidproject.NotificationCenter
-import ir.sharif.androidproject.models.Notification
-import ir.sharif.androidproject.models.NotificationType
+import ir.sharif.androidproject.MessageController
 
 object ConnectionManager {
-
-    val cloud = DispatchQueue("connection")
+    private val cloud = DispatchQueue("Connection")
 
     fun load(number: Int) =
         cloud.postRunnable({
-            NotificationCenter.notifySubscribers(Notification(NotificationType.DATA_LOADED, number + 1..number + 10))
+            MessageController.onFetchComplete((number + 1..number + 10).toList())
         }, 100)
-
 }

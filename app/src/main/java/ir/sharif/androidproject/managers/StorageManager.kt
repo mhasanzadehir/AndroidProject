@@ -1,14 +1,17 @@
 package ir.sharif.androidproject.managers
 
 object StorageManager {
-
-    val queue = DispatchQueue("storage")
+    private val storage = DispatchQueue("Storage")
 
     fun load(): List<Int> {
         TODO()
     }
 
     fun save(n: Int) {
+        TODO()
+    }
+
+    fun readFromFile(): Int {
         TODO()
     }
 }
