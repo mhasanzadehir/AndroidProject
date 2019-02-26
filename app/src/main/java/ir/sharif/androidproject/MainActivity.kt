@@ -7,12 +7,9 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.models.Notification
-import ir.sharif.androidproject.models.NotificationCenter
 import ir.sharif.androidproject.models.NotificationType
 import ir.sharif.androidproject.repository.DataRepository
-import ir.sharif.androidproject.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_layout.view.*
 
 class MainActivity : AppCompatActivity(), NotificationCenter.NotificationCenterDelegate {
     override fun onCreate(savedInstanceState: Bundle?) {
