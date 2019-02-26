@@ -4,8 +4,6 @@ object StorageManager {
 
     val queue = DispatchQueue("storage")
 
-
-
     fun load(): List<Int> {
         TODO()
     }
