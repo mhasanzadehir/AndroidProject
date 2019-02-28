@@ -3,6 +3,7 @@ package ir.sharif.androidproject.managers;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import com.orhanobut.logger.Logger;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -25,8 +26,7 @@ public class DispatchQueue extends Thread {
                 handler.sendMessageDelayed(msg, delay);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // TODO: 2/26/19 add Logger to Project
+            Logger.e(e, e.getMessage());
         }
     }
 
@@ -35,8 +35,7 @@ public class DispatchQueue extends Thread {
             syncLatch.await();
             handler.removeCallbacks(runnable);
         } catch (Exception e) {
-            e.printStackTrace();
-            // TODO: 2/26/19 add Logger to Project
+            Logger.e(e, e.getMessage());
         }
     }
 
@@ -53,8 +52,7 @@ public class DispatchQueue extends Thread {
                 handler.postDelayed(runnable, delay);
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // TODO: 2/26/19 add Logger to Project
+            Logger.e(e, e.getMessage());
         }
     }
 
@@ -63,8 +61,7 @@ public class DispatchQueue extends Thread {
             syncLatch.await();
             handler.removeCallbacksAndMessages(null);
         } catch (Exception e) {
-            e.printStackTrace();
-            // TODO: 2/26/19 add Logger to Project
+            Logger.e(e, e.getMessage());
         }
     }
 
