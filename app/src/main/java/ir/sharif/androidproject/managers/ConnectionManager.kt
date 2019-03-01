@@ -7,6 +7,6 @@ object ConnectionManager {
 
     fun load(number: Int) =
         cloud.postRunnable({
-            MessageController.onFetchComplete((number + 1..number + 10).toList())
+            MessageController.onFetchComplete((number + 1..number + 10).toList(), true)
         }, 100)
 }

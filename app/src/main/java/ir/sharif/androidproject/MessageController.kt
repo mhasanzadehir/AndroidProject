@@ -16,7 +16,10 @@ object MessageController {
         }
     }
 
-    fun onFetchComplete(data: List<Int>) {
+    fun onFetchComplete(data: List<Int>, fromServer: Boolean = false) {
         Advertiser.advertise(Advertisement(AdvertisementType.DATA_LOADED, data))
+        if (fromServer) {
+            StorageManager.save(data.last())
+        }
     }
 }

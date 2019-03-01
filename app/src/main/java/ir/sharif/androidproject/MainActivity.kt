@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
@@ -38,20 +39,20 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
 
     private fun clearList() {
         DataRepository.clear()
-        list.removeAllViews()
+        listView.removeAllViews()
     }
 
     private fun refreshList() {
-        DataRepository.refresh()
-        list.removeAllViews()
-        bindView(DataRepository.getData())
+        DataRepository.refresh() // I think this is useless
+        listView.removeAllViews()
+        bindView(DataRepository.transformData(StorageManager.load()))
     }
 
     private fun fillList() =
         bindView(DataRepository.fetchNewData())
 
-    private fun bindView(dataList: ArrayList<Item>) =
-        dataList.forEach { list.addView(createView(it)) }
+    private fun bindView(dataList: List<Item>) =
+        dataList.forEach { listView.addView(createView(it)) }
 
     private fun createView(item: Item): View {
         val view = LayoutInflater.from(this).inflate(R.layout.item_layout, null)
