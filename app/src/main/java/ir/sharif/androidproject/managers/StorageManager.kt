@@ -3,16 +3,18 @@ package ir.sharif.androidproject.managers
 import android.content.Context
 import com.orhanobut.logger.Logger
 import ir.sharif.androidproject.ApplicationContext
+import ir.sharif.androidproject.MessageController
 import java.io.FileNotFoundException
 
 object StorageManager {
     private val storage = DispatchQueue("Storage")
     private const val filename = "StorageManager"
 
-    fun load(): List<Int> {
-        val n = readFromFile()
-        return (n + 1..n + 10).toList()
-    }
+    fun load() =
+        storage.postRunnable {
+            val n = readFromFile()
+            MessageController.onFetchComplete((n + 1..n + 10).toList(), false)
+        }
 
     fun save(n: Int) {
         writeToFile(n)

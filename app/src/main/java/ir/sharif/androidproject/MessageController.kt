@@ -6,7 +6,7 @@ import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
 
 object MessageController {
-    private var cache = mutableListOf<Int>()
+    private var cache = mutableListOf(0)
 
     fun fetch(fromCache: Boolean = false) {
         if (fromCache) {

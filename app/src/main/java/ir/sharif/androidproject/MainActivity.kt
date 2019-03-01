@@ -1,11 +1,10 @@
 package ir.sharif.androidproject
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import ir.sharif.androidproject.managers.StorageManager
+import com.orhanobut.logger.Logger
 import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
         setContentView(R.layout.activity_main)
         clearButton.setOnClickListener { clearList() }
         refreshButton.setOnClickListener { refreshList() }
-        fetchButton.setOnClickListener { fillList() }
+        fetchButton.setOnClickListener { fetchList() }
     }
 
     override fun onResume() {
@@ -34,22 +33,23 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
     }
 
     override fun receiveData(advertisement: Advertisement) {
-        Log.i(TAG, advertisement.data.toString())
+        Logger.i("New Advertised Data Received: ${advertisement.data}")
+        // Update View
+        runOnUiThread {
+            bindView(DataRepository.transformData(advertisement.data))
+        }
     }
 
-    private fun clearList() {
-        DataRepository.clear()
-        listView.removeAllViews()
-    }
+    private fun clearList() = listView.removeAllViews()
 
     private fun refreshList() {
-        DataRepository.refresh() // I think this is useless
         listView.removeAllViews()
-        bindView(DataRepository.transformData(StorageManager.load()))
+        MessageController.fetch(fromCache = true)
     }
 
-    private fun fillList() =
-        bindView(DataRepository.fetchNewData())
+    private fun fetchList() {
+        MessageController.fetch(fromCache = false)
+    }
 
     private fun bindView(dataList: List<Item>) =
         dataList.forEach { listView.addView(createView(it)) }
