@@ -1,36 +1,26 @@
 package ir.sharif.androidproject.managers
 
-import android.content.Context
-import com.orhanobut.logger.Logger
+import android.content.SharedPreferences
+import android.preference.PreferenceManager
 import ir.sharif.androidproject.ApplicationContext
 import ir.sharif.androidproject.MessageController
-import java.io.FileNotFoundException
 
 object StorageManager {
     private val storage = DispatchQueue("Storage")
-    private const val filename = "StorageManager"
+    private val prefs = PreferenceManager.getDefaultSharedPreferences(ApplicationContext.context)
 
-    fun load() =
-        storage.postRunnable {
-            val n = readFromFile()
-            MessageController.onFetchComplete((n + 1..n + 10).toList(), false)
-        }
+    fun load(last: Int) =
+        storage.postRunnable({
+            val n = readFromPref()
+            if (last >= n) {
+                MessageController.onFetchComplete(emptyList(), false)
+            } else {
+                MessageController.onFetchComplete((last + 1..last + 10).toList(), false)
+            }
 
-    fun save(n: Int) {
-        writeToFile(n)
-    }
+        }, 0)
 
-    private fun readFromFile(): Int {
-        return try {
-            ApplicationContext.context.openFileInput(filename).read()
-        } catch (e: FileNotFoundException) {
-            Logger.i("No Storage File Created Yet.")
-            0
-        }
-    }
+    fun readFromPref(): Int = prefs.getInt("data", 0)
 
-    private fun writeToFile(n: Int) =
-        ApplicationContext.context.openFileOutput(filename, Context.MODE_PRIVATE).use {
-            it.write(byteArrayOf(n.toByte()))
-        }
+    fun writeToPref(n: Int) = prefs.edit().putInt("data", n).apply()
 }

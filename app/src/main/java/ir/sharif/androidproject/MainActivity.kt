@@ -40,7 +40,10 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
         }
     }
 
-    private fun clearList() = listView.removeAllViews()
+    private fun clearList() {
+        listView.removeAllViews()
+        MessageController.clearList()
+    }
 
     private fun refreshList() {
         listView.removeAllViews()
@@ -48,6 +51,7 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
     }
 
     private fun fetchList() {
+        listView.removeAllViews()
         MessageController.fetch(fromCache = false)
     }
 
