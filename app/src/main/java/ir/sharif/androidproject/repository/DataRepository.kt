@@ -20,7 +20,7 @@ object DataRepository {
         return newData
     }
 
-    fun transformData(data: List<Int>) = data.map { number -> Item(number.toString(), "You", "") }
+    fun transformData(data: List<String>, subTitle: String) = data.map { number -> Item(number, subTitle, "") }
 
     fun getData() = list
 

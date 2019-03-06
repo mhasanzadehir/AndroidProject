@@ -5,6 +5,7 @@ import ir.sharif.androidproject.managers.ConnectionManager
 import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
+import ir.sharif.androidproject.models.Item
 
 object MessageController {
     private var last = 0
@@ -14,19 +15,14 @@ object MessageController {
             StorageManager.load(last)
             last += 10
         } else {
-            Logger.i("Read From File::" + StorageManager.readFromPref())
             ConnectionManager.load(StorageManager.readFromPref())
         }
     }
 
-    fun onFetchComplete(data: List<Int>, fromServer: Boolean = false) {
+    fun onFetchComplete(data: List<Item>, fromServer: Boolean = false) {
+        Advertiser.advertise(Advertisement(AdvertisementType.DATA_LOADED, data))
         if (fromServer) {
-            Advertiser.advertise(Advertisement(AdvertisementType.DATA_LOADED, (1..data.last()).toList()))
-            StorageManager.writeToPref(data.last())
-            Logger.i("Storage Manager::" + data.last())
-        }
-        else {
-            Advertiser.advertise(Advertisement(AdvertisementType.DATA_LOADED, data))
+            StorageManager.writeToPref(data.last().title.toInt())
         }
     }
 

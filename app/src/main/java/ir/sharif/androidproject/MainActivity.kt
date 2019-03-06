@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.size
 import com.orhanobut.logger.Logger
+import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
         Logger.i("New Advertised Data Received: ${advertisement.data}")
         // Update View
         runOnUiThread {
-            bindView(DataRepository.transformData(advertisement.data))
+            bindView(advertisement.data)
         }
     }
 
@@ -51,18 +53,34 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
     }
 
     private fun fetchList() {
-        listView.removeAllViews()
+        val dataSize = StorageManager.readFromPref()
+        if (listView.size < dataSize) {
+            listView.removeAllViews()
+            runOnUiThread {
+                bindView((listView.size + 1..dataSize).map { Item(it.toString(), "From Cache", "") })
+            }
+        }
         MessageController.fetch(fromCache = false)
     }
 
-    private fun bindView(dataList: List<Item>) =
+    private fun bindView(dataList: List<Item>) {
         dataList.forEach { listView.addView(createView(it)) }
+        Logger.i("size of list view " + listView.size)
+
+    }
 
     private fun createView(item: Item): View {
         val view = LayoutInflater.from(this).inflate(R.layout.item_layout, null)
         view.titleTextView.text = item.title
         view.subtitleTextView.text = item.subTitle
         view.image.loadUrl(item.image)
+        if (item.subTitle == "From Cache") {
+            view.image.setImageResource(R.drawable.cache_image)
+        } else if (item.subTitle == "From Refresh") {
+            view.image.setImageResource(R.drawable.storage_image)
+        } else if (item.subTitle == "From Server") {
+            view.image.setImageResource(R.drawable.server_image)
+        }
         return view
     }
 

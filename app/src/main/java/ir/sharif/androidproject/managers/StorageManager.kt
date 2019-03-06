@@ -1,9 +1,9 @@
 package ir.sharif.androidproject.managers
 
-import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import ir.sharif.androidproject.ApplicationContext
 import ir.sharif.androidproject.MessageController
+import ir.sharif.androidproject.models.Item
 
 object StorageManager {
     private val storage = DispatchQueue("Storage")
@@ -15,7 +15,7 @@ object StorageManager {
             if (last >= n) {
                 MessageController.onFetchComplete(emptyList(), false)
             } else {
-                MessageController.onFetchComplete((last + 1..last + 10).toList(), false)
+                MessageController.onFetchComplete((last + 1..last + 10).map { Item(it.toString(), "From Refresh", "") }, false)
             }
 
         }, 0)
