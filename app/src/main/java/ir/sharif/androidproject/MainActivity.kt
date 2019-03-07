@@ -10,18 +10,21 @@ import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
-import ir.sharif.androidproject.repository.DataRepository
-import ir.sharif.androidproject.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_layout.view.*
 
 class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
+    private var dataOnScreen = ArrayList<Item>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         clearButton.setOnClickListener { clearList() }
         refreshButton.setOnClickListener { refreshList() }
         fetchButton.setOnClickListener { fetchList() }
+        if (savedInstanceState != null) {
+            dataOnScreen = savedInstanceState.getParcelableArrayList("ON_SCREEN_DATA")
+            bindView(dataOnScreen)
+        }
     }
 
     override fun onResume() {
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
 
     override fun receiveData(advertisement: Advertisement) {
         Logger.i("New Advertised Data Received: ${advertisement.data}")
+        dataOnScreen.addAll(advertisement.data)
         // Update View
         runOnUiThread {
             bindView(advertisement.data)
@@ -44,20 +48,23 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
 
     private fun clearList() {
         listView.removeAllViews()
+        dataOnScreen.clear()
         MessageController.clearList()
     }
 
     private fun refreshList() {
         listView.removeAllViews()
+        dataOnScreen.clear()
         MessageController.fetch(fromCache = true)
     }
 
     private fun fetchList() {
         val dataSize = StorageManager.readFromPref()
         if (listView.size < dataSize) {
-            listView.removeAllViews()
             runOnUiThread {
-                bindView((listView.size + 1..dataSize).map { Item(it.toString(), "From Cache", "") })
+                val cachedData = (listView.size + 1..dataSize).map { Item(it.toString(), "From Cache", "") }
+                dataOnScreen.addAll(cachedData)
+                bindView(cachedData)
             }
         }
         MessageController.fetch(fromCache = false)
@@ -66,7 +73,11 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
     private fun bindView(dataList: List<Item>) {
         dataList.forEach { listView.addView(createView(it)) }
         Logger.i("size of list view " + listView.size)
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList("ON_SCREEN_DATA", dataOnScreen)
     }
 
     private fun createView(item: Item): View {

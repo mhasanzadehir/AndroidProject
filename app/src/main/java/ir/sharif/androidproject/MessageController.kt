@@ -1,6 +1,5 @@
 package ir.sharif.androidproject
 
-import com.orhanobut.logger.Logger
 import ir.sharif.androidproject.managers.ConnectionManager
 import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Advertisement

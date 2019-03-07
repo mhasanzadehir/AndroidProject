@@ -9,5 +9,5 @@ object ConnectionManager {
     fun load(number: Int) =
         cloud.postRunnable({
             MessageController.onFetchComplete(((number + 1..number + 10).map { Item(it.toString(), "From Server", "") }), true)
-        }, 100)
+        }, 3000)
 }
