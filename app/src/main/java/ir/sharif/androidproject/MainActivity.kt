@@ -10,7 +10,9 @@ import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
+import ir.sharif.androidproject.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_layout.view.*
 
 class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
     private var dataOnScreen = ArrayList<Item>()
@@ -62,9 +64,10 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
         val dataSize = StorageManager.readFromPref()
         if (listView.size < dataSize) {
             runOnUiThread {
-                val cachedData = (listView.size + 1..dataSize).map { Item(it.toString(), "From Cache", "") }
-                dataOnScreen.addAll(cachedData)
-                bindView(cachedData)
+                listView.removeAllViews()
+                runOnUiThread {
+                    bindView((listView.size + 1..dataSize).map { Item(it.toString(), "From Cache", "") })
+                }
             }
         }
         MessageController.fetch(fromCache = false)
