@@ -1,4 +1,4 @@
-package ir.sharif.androidproject.webservices.base
+package ir.sharif.androidproject.webservice.base
 
 import com.google.gson.GsonBuilder
 
@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ir.sharif.androidproject.webservices.base.WebserviceAdresses.BASE_URL
+import ir.sharif.androidproject.webservice.base.WebserviceAdresses.BASE_URL
 
 object MyRetrofit {
 

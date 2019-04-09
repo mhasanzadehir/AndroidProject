@@ -1,4 +1,4 @@
-package ir.sharif.androidproject.webservices.base
+package ir.sharif.androidproject.webservice.base
 
 import java.io.IOException
 
