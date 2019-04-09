@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.size
 import com.orhanobut.logger.Logger
 import ir.sharif.androidproject.managers.StorageManager
-import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
+import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_layout.view.*
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
             dataOnScreen = savedInstanceState.getParcelableArrayList("ON_SCREEN_DATA")
             bindView(dataOnScreen)
         }
+
     }
 
     override fun onResume() {
@@ -88,12 +89,10 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
         view.titleTextView.text = item.title
         view.subtitleTextView.text = item.subTitle
         view.image.loadUrl(item.image)
-        if (item.subTitle == "From Cache") {
-            view.image.setImageResource(R.drawable.cache_image)
-        } else if (item.subTitle == "From Refresh") {
-            view.image.setImageResource(R.drawable.storage_image)
-        } else if (item.subTitle == "From Server") {
-            view.image.setImageResource(R.drawable.server_image)
+        when {
+            item.subTitle == "From Cache" -> view.image.setImageResource(R.drawable.cache_image)
+            item.subTitle == "From Refresh" -> view.image.setImageResource(R.drawable.storage_image)
+            item.subTitle == "From Server" -> view.image.setImageResource(R.drawable.server_image)
         }
         return view
     }

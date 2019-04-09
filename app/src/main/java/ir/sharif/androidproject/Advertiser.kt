@@ -8,7 +8,8 @@ object Advertiser {
         fun receiveData(advertisement: Advertisement)
     }
 
-    private val subscribers = AdvertisementType.values().map { mutableListOf<AdvertiseListener>() }
+    private val subscribers =
+        AdvertisementType.values().map { mutableListOf<AdvertiseListener>() }
 
     fun subscribe(subscriber: AdvertiseListener, advertisementType: AdvertisementType) =
         subscribers[advertisementType.ordinal].add(subscriber)
