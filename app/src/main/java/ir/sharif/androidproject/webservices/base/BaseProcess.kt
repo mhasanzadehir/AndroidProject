@@ -1,6 +1,5 @@
 package ir.sharif.androidproject.webservices.base
 
-import ir.sharif.vamdeh.webservices.base.WebserviceException
 import java.io.IOException
 
 import retrofit2.Call

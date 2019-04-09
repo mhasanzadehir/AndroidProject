@@ -1,4 +1,4 @@
-package ir.sharif.vamdeh.webservices.base
+package ir.sharif.androidproject.webservices.base
 
 class WebserviceException(private val code: Int, override val message: String) : Exception() {
 

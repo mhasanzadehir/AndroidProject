@@ -4,7 +4,7 @@ import java.io.IOException
 
 import ir.sharif.androidproject.webservices.base.BaseProcess
 import ir.sharif.androidproject.webservices.base.MyRetrofit
-import ir.sharif.vamdeh.webservices.base.WebserviceException
+import ir.sharif.androidproject.webservices.base.WebserviceException
 
 class PostsProcess : BaseProcess() {
     private val request: PostsRequest = PostsRequest()

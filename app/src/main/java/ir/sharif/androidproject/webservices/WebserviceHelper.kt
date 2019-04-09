@@ -2,7 +2,7 @@ package ir.sharif.androidproject.webservices
 
 import ir.sharif.androidproject.webservices.webservices.posts.PostsProcess
 import ir.sharif.androidproject.webservices.webservices.posts.PostsResponse
-import ir.sharif.vamdeh.webservices.base.WebserviceException
+import ir.sharif.androidproject.webservices.base.WebserviceException
 import java.io.IOException
 
 object WebserviceHelper {
