@@ -8,7 +8,9 @@ import ir.sharif.androidproject.database.AppDatabase
 
 class MyApplication : Application() {
 
-    lateinit var database: AppDatabase
+    companion object {
+        lateinit var database: AppDatabase
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -16,4 +18,5 @@ class MyApplication : Application() {
         Logger.addLogAdapter(AndroidLogAdapter())
         database = Room.databaseBuilder(ApplicationContext.context, AppDatabase::class.java, "db").build()
     }
+
 }

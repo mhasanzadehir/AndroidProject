@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.size
 import com.orhanobut.logger.Logger
+import ir.sharif.androidproject.database.posts.PostBean
 import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
             dataOnScreen = savedInstanceState.getParcelableArrayList("ON_SCREEN_DATA")
             bindView(dataOnScreen)
         }
+
+        MyApplication.database.postDao().insertAll(PostBean())
 
     }
 

@@ -5,19 +5,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Post")
-class PostBean {
-
+class PostBean(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id : String? = null
-
+    val id: String? = null,
     @ColumnInfo(name = "userId")
-    val userId : String? = null
-
+    val userId: String? = null,
     @ColumnInfo(name = "title")
-    val title : String? = null
-
+    val title: String? = null,
     @ColumnInfo(name = "body")
-    val body : String? = null
-
-}
+    val body: String? = null
+)
