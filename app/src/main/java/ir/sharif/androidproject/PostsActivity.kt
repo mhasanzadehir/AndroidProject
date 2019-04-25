@@ -3,6 +3,7 @@ package ir.sharif.androidproject
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -14,6 +15,7 @@ import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.webservice.webservices.posts.PostResponse
 import kotlinx.android.synthetic.main.activity_posts.*
 
+
 class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<PostResponse>> {
     private lateinit var postAdapter: PostAdapter
     private var isInGridMode = false
@@ -21,12 +23,18 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
+        setSupportActionBar(postsToolbar)
         title = "prj2"
         postList.layoutManager = LinearLayoutManager(this)
         postAdapter = PostAdapter(arrayListOf())
         postList.adapter = postAdapter
         MessageController.fetchPosts()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.posts_menu, menu)
+        return true
     }
 
     override fun onResume() {
