@@ -15,7 +15,7 @@ import ir.sharif.androidproject.utils.loadUrl
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_layout.view.*
 
-class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
+class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Item>> {
     private var dataOnScreen = ArrayList<Item>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
         Advertiser.unSubscribe(this, AdvertisementType.DATA_LOADED)
     }
 
-    override fun receiveData(advertisement: Advertisement) {
+    override fun receiveData(advertisement: Advertisement<List<Item>>) {
         Logger.i("New Advertised Data Received: ${advertisement.data}")
         dataOnScreen.addAll(advertisement.data)
         // Update View

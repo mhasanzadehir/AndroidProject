@@ -9,13 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ir.sharif.androidproject.webservice.WebserviceHelper
+import ir.sharif.androidproject.models.Advertisement
+import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.webservice.webservices.posts.PostResponse
 import kotlinx.android.synthetic.main.activity_posts.*
-import kotlin.concurrent.thread
 
-class PostsActivity : AppCompatActivity() {
-
+class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<PostResponse>> {
     private lateinit var postAdapter: PostAdapter
     private var isInGridMode = false
 
@@ -27,16 +26,22 @@ class PostsActivity : AppCompatActivity() {
         postList.layoutManager = LinearLayoutManager(this)
         postAdapter = PostAdapter(arrayListOf())
         postList.adapter = postAdapter
-        fetchPosts()
-
+        MessageController.fetchPosts()
     }
 
-    private fun fetchPosts() {
-        thread(true) {
-            val posts = WebserviceHelper.getPosts()
-            runOnUiThread {
-                postAdapter.replaceData(posts)
-            }
+    override fun onResume() {
+        super.onResume()
+        Advertiser.subscribe(this, AdvertisementType.POSTS_LOADED)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Advertiser.unSubscribe(this, AdvertisementType.POSTS_LOADED)
+    }
+
+    override fun receiveData(advertisement: Advertisement<List<PostResponse>>) {
+        runOnUiThread {
+            postAdapter.replaceData(advertisement.data)
         }
     }
 
