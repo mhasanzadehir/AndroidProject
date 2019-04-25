@@ -28,8 +28,7 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener {
             dataOnScreen = savedInstanceState.getParcelableArrayList("ON_SCREEN_DATA")
             bindView(dataOnScreen)
         }
-
-        MyApplication.database.postDao().insertAll(PostBean())
+//        MyApplication.database.postDao().insertAll(PostBean())
 
     }
 

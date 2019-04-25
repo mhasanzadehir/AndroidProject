@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey
 class PostBean(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: String? = null,
+    var id: String,
     @ColumnInfo(name = "userId")
-    val userId: String? = null,
+    var userId: String? = null,
     @ColumnInfo(name = "title")
-    val title: String? = null,
+    var title: String? = null,
     @ColumnInfo(name = "body")
-    val body: String? = null
+    var body: String? = null
 )
