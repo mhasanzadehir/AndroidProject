@@ -22,6 +22,7 @@ class PostsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
         title = "prj2"
         postList.layoutManager = LinearLayoutManager(this)
         postAdapter = PostAdapter(arrayListOf())
