@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.sharif.androidproject.webservice.WebserviceHelper
@@ -16,6 +17,7 @@ import kotlin.concurrent.thread
 class PostsActivity : AppCompatActivity() {
 
     private lateinit var postAdapter: PostAdapter
+    private var isInGridMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,11 +1,9 @@
 package ir.sharif.androidproject.webservice.base
 
 import java.io.IOException
-
 import retrofit2.Call
 
 abstract class BaseProcess {
-
     @Throws(IOException::class, WebserviceException::class)
     protected fun <T> send(call: Call<T>): T {
         val execute = call.execute()
@@ -16,6 +14,5 @@ abstract class BaseProcess {
     }
 
     @Throws(IOException::class, WebserviceException::class)
-    abstract fun  process(): Any
-
+    abstract fun process(): Any
 }
