@@ -22,10 +22,12 @@ class PostsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts)
+        title = "prj2"
         postList.layoutManager = LinearLayoutManager(this)
         postAdapter = PostAdapter(arrayListOf())
         postList.adapter = postAdapter
         fetchPosts()
+
     }
 
     private fun fetchPosts() {
