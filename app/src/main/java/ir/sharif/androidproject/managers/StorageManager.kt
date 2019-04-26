@@ -15,7 +15,10 @@ object StorageManager {
             if (last >= n) {
                 MessageController.onFetchComplete(emptyList(), false)
             } else {
-                MessageController.onFetchComplete((last + 1..last + 10).map { Item(it.toString(), "From Refresh", "") }, false)
+                MessageController.onFetchComplete(
+                    (last + 1..last + 10).map { Item(it.toString(), "From Refresh", "") },
+                    false
+                )
             }
 
         }, 0)
