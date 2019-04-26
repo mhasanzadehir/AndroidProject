@@ -19,10 +19,10 @@ object MessageController {
         if (lastPostFetchTime == null || (lastPostFetchTime!! + 5.minutes > DateTime.now())) {
             Logger.i("Loading posts from server.")
             ConnectionManager.loadPosts()
+            lastPostFetchTime = DateTime.now()
         } else {
             Logger.i("Loading posts from storage.")
             StorageManager.loadPosts()
-            lastPostFetchTime = DateTime.now()
         }
     }
 
