@@ -16,7 +16,7 @@ interface CommentDao {
     fun insertAll(vararg comments: CommentBean)
 
     @Query("DELETE FROM Comment WHERE Comment.postId == :postId")
-    fun deletPostComments(postId: Int)
+    fun deletePostComments(postId: Int)
 
     @Query("DELETE FROM Comment")
     fun nukeTable()
