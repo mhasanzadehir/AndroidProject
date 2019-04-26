@@ -75,7 +75,7 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
             holder.itemView.findViewById<TextView>(R.id.bodyTextView).text = postList[position].body
             holder.itemView.setOnClickListener {
                 val myIntent = Intent(baseContext, CommentsActivity::class.java)
-                myIntent.putExtra("commentId", postList[position].id)
+                myIntent.putExtra("postId", postList[position].id)
                 startActivity(myIntent)
             }
         }
