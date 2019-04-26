@@ -10,6 +10,7 @@ import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.models.Item
 import ir.sharif.androidproject.webservice.WebserviceHelper
 import ir.sharif.androidproject.webservice.base.WebserviceException
+import java.net.SocketTimeoutException
 
 object ConnectionManager {
     private val cloud = DispatchQueue("Connection")
@@ -25,7 +26,7 @@ object ConnectionManager {
                     }
                 }.toTypedArray())
                 Advertiser.advertise(Advertisement(AdvertisementType.POSTS_LOADED, posts))
-            } catch (e: WebserviceException) {
+            } catch (e: Exception) {
                 StorageManager.loadPosts()
             }
         }
@@ -42,7 +43,7 @@ object ConnectionManager {
                     }
                 }.toTypedArray())
                 Advertiser.advertise(Advertisement(AdvertisementType.COMMENTS_LOADED, comments))
-            } catch (e: WebserviceException) {
+            } catch (e: Exception) {
                 StorageManager.loadComments(postId)
             }
         }

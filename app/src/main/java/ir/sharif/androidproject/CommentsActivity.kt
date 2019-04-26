@@ -35,6 +35,11 @@ class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<
         Advertiser.subscribe(this, AdvertisementType.COMMENTS_LOADED)
     }
 
+    override fun onPause() {
+        super.onPause()
+        Advertiser.unSubscribe(this, AdvertisementType.COMMENTS_LOADED)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.comments_menu, menu)
