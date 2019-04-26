@@ -2,14 +2,11 @@ package ir.sharif.androidproject.database.comments
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
-@Entity(tableName = "Post")
+@Entity(tableName = "Comment", primaryKeys = ["postId", "id"])
 class CommentBean(
-    @PrimaryKey
     @ColumnInfo(name = "postId")
     var postId: Int,
-    @PrimaryKey
     @ColumnInfo(name = "id")
     var id: Int,
     @ColumnInfo(name = "name")

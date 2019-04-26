@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Item
             dataOnScreen = savedInstanceState.getParcelableArrayList("ON_SCREEN_DATA")
             bindView(dataOnScreen)
         }
-//        MyApplication.database.postDao().insertAll(PostBean())
-
     }
 
     override fun onResume() {
