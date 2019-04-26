@@ -7,4 +7,9 @@
     <string name="name">name</string>
     <string name="email">email</string>
     <string name="body">body</string>
+    <string name="reza_zeiny">Reza Zeiny</string>
+    <string name="mahdi_hassanzadeh">Mahdi Hassanzadeh</string>
+    <string name="amir_hossein_mahdipour">Amir Hossein Mahdipour</string>
+    <string name="seyed_alireza_fatemi_jahromi">Seyed Alireza Fatemi Jahromi</string>
+    <string name="switch_menu">Switch</string>
 </resources>

@@ -11,7 +11,7 @@
             android:color="#999999">
     </stroke>
     <gradient
-            android:startColor="#ff512f"
-            android:endColor="#dd2476">
+            android:startColor="#00BCD4"
+            android:endColor="#D28BC34A">
     </gradient>
 </shape>

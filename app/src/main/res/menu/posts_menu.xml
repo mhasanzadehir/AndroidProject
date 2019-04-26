@@ -4,12 +4,16 @@
 
     <item
             android:id="@+id/gridSwitch"
-            android:title="Switch"
+            android:title="@string/switch_menu"
             app:actionLayout="@layout/switch_item"
             app:showAsAction="always"/>
-    <item android:title="Seyed Alireza Fatemi Jahromi"/>
-    <item android:title="Amir Hossein Mahdipour"/>
-    <item android:title="Mahdi Hassanzadeh"/>
-    <item android:title="Reza Zeiny"/>
+    <item android:title="@string/seyed_alireza_fatemi_jahromi"
+          android:id="@+id/Fatemi"/>
+    <item android:title="@string/amir_hossein_mahdipour"
+          android:id="@+id/Mahdipour"/>
+    <item android:title="@string/mahdi_hassanzadeh"
+          android:id="@+id/Hassanzadeh"/>
+    <item android:title="@string/reza_zeiny"
+          android:id="@+id/Zeiny"/>
 
 </menu>

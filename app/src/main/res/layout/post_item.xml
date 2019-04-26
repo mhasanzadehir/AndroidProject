@@ -3,7 +3,9 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/post_background">
+                android:background="@drawable/post_background"
+                android:layout_margin="10dp"
+                android:padding="15dp">
 
     <TextView
             android:id="@+id/titleTextView"
@@ -11,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:text="@string/title"
-            android:textSize="40sp"
+            android:textSize="24sp"
             android:textStyle="bold"/>
 
     <TextView
@@ -20,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/titleTextView"
             android:text="@string/body"
-            android:textSize="32sp"
+            android:textSize="14sp"
             android:textStyle="italic"/>
 
 
