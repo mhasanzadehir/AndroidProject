@@ -8,7 +8,6 @@ import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.models.Item
-import java.util.*
 
 object MessageController {
     private var last = 0
@@ -16,18 +15,35 @@ object MessageController {
     private val lastCommentFetchTimes = mutableListOf<Pair<Int, DateTime>>()
 
     fun fetchPosts() {
-        if (lastPostFetchTime == null || (lastPostFetchTime!! + 5.minutes > DateTime.now())) {
+        if (lastPostFetchTime == null || (lastPostFetchTime!! + 5.minutes < DateTime.now())) {
             Logger.i("Loading posts from server.")
             ConnectionManager.loadPosts()
+            lastPostFetchTime = DateTime.now()
         } else {
             Logger.i("Loading posts from storage.")
             StorageManager.loadPosts()
-            lastPostFetchTime = DateTime.now()
         }
     }
 
     fun fetchComments(postId: Int) {
-        ConnectionManager.loadComments(postId)
+        val last = findLastCommentFetchTime(postId)
+        when {
+            last == null -> {
+                Logger.i("Loading comments from server.")
+                ConnectionManager.loadComments(postId)
+                lastCommentFetchTimes.add(Pair(postId, DateTime.now()))
+            }
+            last.second + 5.minutes < DateTime.now() -> {
+                Logger.i("Loading comments from server.")
+                ConnectionManager.loadComments(postId)
+                lastCommentFetchTimes.remove(last)
+                lastCommentFetchTimes.add(Pair(postId, DateTime.now()))
+            }
+            else -> {
+                Logger.i("Loading comments from database.")
+                StorageManager.loadComments(postId)
+            }
+        }
     }
 
     private fun findLastCommentFetchTime(postId: Int) =

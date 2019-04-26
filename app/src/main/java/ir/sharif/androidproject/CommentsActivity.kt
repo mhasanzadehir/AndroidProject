@@ -17,10 +17,13 @@ import kotlinx.android.synthetic.main.activity_comments.*
 class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<CommentResponse>> {
     private lateinit var commentAdapter: CommentAdapter
     private var postId: Int = 1
+    private var isSubscribed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
+        Advertiser.subscribe(this, AdvertisementType.COMMENTS_LOADED)
+        isSubscribed = true
         setSupportActionBar(commentsToolbar)
         postId = intent.getIntExtra("postId", 1)
         title = "comments"
@@ -32,7 +35,15 @@ class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<
 
     override fun onResume() {
         super.onResume()
-        Advertiser.subscribe(this, AdvertisementType.COMMENTS_LOADED)
+        if (!isSubscribed) {
+            Advertiser.subscribe(this, AdvertisementType.COMMENTS_LOADED)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Advertiser.unSubscribe(this, AdvertisementType.COMMENTS_LOADED)
+        isSubscribed = false
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

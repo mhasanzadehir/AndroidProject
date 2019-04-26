@@ -8,6 +8,7 @@ import ir.sharif.androidproject.MyApplication
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.models.Item
+import ir.sharif.androidproject.webservice.webservices.comments.CommentResponse
 import ir.sharif.androidproject.webservice.webservices.posts.PostResponse
 
 object StorageManager {
@@ -27,8 +28,12 @@ object StorageManager {
 
     fun loadComments(postId: Int) {
         storage.postRunnable {
-            val posts = MyApplication.database.commentDao().getPostComments(postId)
-            Advertiser.advertise(Advertisement(AdvertisementType.POSTS_LOADED, posts))
+            val comments = MyApplication.database.commentDao().getPostComments(postId).map { commentBean ->
+                with(commentBean) {
+                    CommentResponse(postId, id, name, email, body)
+                }
+            }
+            Advertiser.advertise(Advertisement(AdvertisementType.COMMENTS_LOADED, comments))
         }
     }
 
