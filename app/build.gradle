@@ -21,8 +21,8 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "ir.sharif.androidproject"
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 18
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
