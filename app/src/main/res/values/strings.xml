@@ -3,4 +3,9 @@
     <string name="clear_list">Clear List</string>
     <string name="refresh_list">Refresh List</string>
     <string name="fetch_data">Fetch Data</string>
+    <string name="title">title</string>
+    <string name="body">body</string>
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="body">body</string>
 </resources>

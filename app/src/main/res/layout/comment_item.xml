@@ -6,19 +6,27 @@
                 android:background="@drawable/post_background">
 
     <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="@string/title"
+            android:text="@string/name"
             android:textSize="40sp"
             android:textStyle="bold"/>
+
+    <TextView
+            android:id="@+id/emailTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/nameTextView"
+            android:text="@string/email"
+            android:textSize="36sp"/>
 
     <TextView
             android:id="@+id/bodyTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titleTextView"
+            android:layout_below="@id/emailTextView"
             android:text="@string/body"
             android:textSize="32sp"
             android:textStyle="italic"/>
