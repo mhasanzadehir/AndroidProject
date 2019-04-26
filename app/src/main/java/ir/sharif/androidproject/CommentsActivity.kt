@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_comments.*
 
 class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<CommentResponse>> {
     private lateinit var commentAdapter: CommentAdapter
-    private var commentsSize: Int = 1
     private var postId: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +46,9 @@ class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<
     override fun receiveData(advertisement: Advertisement<List<CommentResponse>>) {
         runOnUiThread {
             commentAdapter.replaceData(advertisement.data)
+            val commentsSize = advertisement.data.size
+            title = "Post $postId,$commentsSize comments"
         }
-        commentsSize = advertisement.data.size
-        title = "Post " + postId + "," + commentsSize + " comments"
     }
 
     inner class CommentAdapter(private var commentList: ArrayList<CommentResponse>) :
