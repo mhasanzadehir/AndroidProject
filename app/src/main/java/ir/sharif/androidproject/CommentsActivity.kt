@@ -14,14 +14,14 @@ import ir.sharif.androidproject.webservice.webservices.posts.PostResponse
 import kotlinx.android.synthetic.main.activity_posts.*
 import kotlin.concurrent.thread
 
-class PostsActivity : AppCompatActivity() {
+class CommentsActivity : AppCompatActivity() {
 
     private lateinit var postAdapter: PostAdapter
     private var isInGridMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_posts)
+        setContentView(R.layout.activity_comments)
         title = "prj2"
         postList.layoutManager = LinearLayoutManager(this)
         postAdapter = PostAdapter(arrayListOf())
@@ -35,14 +35,13 @@ class PostsActivity : AppCompatActivity() {
             val posts = WebserviceHelper.getPosts()
             runOnUiThread {
                 postAdapter.replaceData(posts)
-
             }
         }
     }
 
     inner class PostAdapter(private var postList: ArrayList<PostResponse>) : RecyclerView.Adapter<PostViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            PostViewHolder(LayoutInflater.from(this@PostsActivity).inflate(R.layout.post_item, null))
+            PostViewHolder(LayoutInflater.from(this@CommentsActivity).inflate(R.layout.post_item, null))
 
         override fun getItemCount() = postList.size
 
