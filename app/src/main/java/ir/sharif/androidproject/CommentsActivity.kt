@@ -6,56 +6,61 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ir.sharif.androidproject.models.Advertisement
+import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.webservice.WebserviceHelper
-import ir.sharif.androidproject.webservice.webservices.posts.PostResponse
-import kotlinx.android.synthetic.main.activity_posts.*
+import ir.sharif.androidproject.webservice.webservices.comments.CommentResponse
+import kotlinx.android.synthetic.main.activity_comments.*
 import kotlin.concurrent.thread
 
-class CommentsActivity : AppCompatActivity() {
+class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<CommentResponse>> {
+    override fun receiveData(advertisement: Advertisement<List<CommentResponse>>) {
+        runOnUiThread {
+            commentAdapter.replaceData(advertisement.data)
+        }
+    }
 
-    private lateinit var postAdapter: PostAdapter
-    private var isInGridMode = false
+    private lateinit var commentAdapter: CommentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
+        val postId = intent.getIntExtra("postId", 1)
         title = "prj2"
-        postList.layoutManager = LinearLayoutManager(this)
-        postAdapter = PostAdapter(arrayListOf())
-        postList.adapter = postAdapter
-        fetchPosts()
-
+        commentList.layoutManager = LinearLayoutManager(this)
+        commentAdapter = CommentAdapter(arrayListOf())
+        commentList.adapter = commentAdapter
+        fetchComments(postId)
     }
 
-    private fun fetchPosts() {
-        thread(true) {
-            val posts = WebserviceHelper.getPosts()
-            runOnUiThread {
-                postAdapter.replaceData(posts)
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        Advertiser.subscribe(this, AdvertisementType.COMMENTS_LOADED)
     }
 
-    inner class PostAdapter(private var postList: ArrayList<PostResponse>) : RecyclerView.Adapter<PostViewHolder>() {
+    private fun fetchComments(postId:Int) = MessageController.fetchComments(postId)
+
+
+    inner class CommentAdapter(private var commentList: ArrayList<CommentResponse>) : RecyclerView.Adapter<CommentViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-            PostViewHolder(LayoutInflater.from(this@CommentsActivity).inflate(R.layout.post_item, null))
+            CommentViewHolder(LayoutInflater.from(this@CommentsActivity).inflate(R.layout.comment_item, null))
 
-        override fun getItemCount() = postList.size
+        override fun getItemCount() = commentList.size
 
-        override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-            holder.itemView.findViewById<TextView>(R.id.titleTextView).text = postList[position].title
-            holder.itemView.findViewById<TextView>(R.id.bodyTextView).text = postList[position].body
+        override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
+            holder.itemView.findViewById<TextView>(R.id.nameTextView).text = commentList[position].name
+            holder.itemView.findViewById<TextView>(R.id.emailTextView).text = commentList[position].email
+            holder.itemView.findViewById<TextView>(R.id.bodyTextView).text = commentList[position].body
         }
 
-        fun replaceData(posts: List<PostResponse>) {
-            postList.clear()
-            postList.addAll(posts)
+        fun replaceData(comments: List<CommentResponse>) {
+            commentList.clear()
+            commentList.addAll(comments)
             notifyDataSetChanged()
         }
     }
 
-    inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    inner class CommentViewHolder(view: View) : RecyclerView.ViewHolder(view)
 }

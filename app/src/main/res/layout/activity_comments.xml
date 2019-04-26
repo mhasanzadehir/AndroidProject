@@ -5,10 +5,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".PostsActivity">
+        tools:context=".CommentsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/postList"
+            android:id="@+id/commentList"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
