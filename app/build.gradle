@@ -6,6 +6,12 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+def klockVersion = "1.4.0"
+
+repositories {
+    maven { url "https://dl.bintray.com/soywiz/soywiz" }
+}
+
 //apply plugin: 'com.tencent.tinker.patch'
 androidExtensions {
     experimental = true
@@ -41,6 +47,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     implementation 'android.arch.persistence.room:runtime:' + rootProject.archRoomVersion
     kapt 'android.arch.persistence.room:compiler:' + rootProject.archRoomVersion
+    implementation "com.soywiz:klock-android:$klockVersion" // Android
     // Optional, help to generate the final application
 //    compileOnly 'com.tencent.tinker:tinker-android-anno:1.9.1'
     // Tinker's main Android lib
