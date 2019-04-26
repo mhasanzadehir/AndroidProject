@@ -13,10 +13,11 @@ object MessageController {
     private var last = 0
 
     fun fetchPosts() {
-        thread(true) {
-            val posts = WebserviceHelper.getPosts()
-            Advertiser.advertise(Advertisement(AdvertisementType.POSTS_LOADED, posts))
-        }
+        ConnectionManager.loadPosts()
+    }
+
+    fun fetchComments(postId: Int) {
+        ConnectionManager.loadComments(postId)
     }
 
     fun fetch(fromCache: Boolean = false) {

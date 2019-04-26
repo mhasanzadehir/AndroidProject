@@ -4,5 +4,6 @@ data class Advertisement<T>(val type: AdvertisementType, val data: T)
 
 enum class AdvertisementType {
     DATA_LOADED,
-    POSTS_LOADED;
+    POSTS_LOADED,
+    COMMENTS_LOADED;
 }
