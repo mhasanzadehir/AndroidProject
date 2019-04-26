@@ -5,9 +5,19 @@ import ir.sharif.androidproject.managers.StorageManager
 import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.models.Item
+import ir.sharif.androidproject.webservice.WebserviceHelper
+import ir.sharif.androidproject.webservice.webservices.posts.PostResponse
+import kotlin.concurrent.thread
 
 object MessageController {
     private var last = 0
+
+    fun fetchPosts() {
+        thread(true) {
+            val posts = WebserviceHelper.getPosts()
+            Advertiser.advertise(Advertisement(AdvertisementType.POSTS_LOADED, posts))
+        }
+    }
 
     fun fetch(fromCache: Boolean = false) {
         if (fromCache) {

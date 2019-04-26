@@ -4,19 +4,22 @@ import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
 
 object Advertiser {
-    interface AdvertiseListener {
-        fun receiveData(advertisement: Advertisement)
+    interface AdvertiseListener<T> {
+        fun receiveData(advertisement: Advertisement<T>)
     }
 
     private val subscribers =
-        AdvertisementType.values().map { mutableListOf<AdvertiseListener>() }
+        AdvertisementType.values().map { mutableListOf<AdvertiseListener<Any>>() }
 
-    fun subscribe(subscriber: AdvertiseListener, advertisementType: AdvertisementType) =
-        subscribers[advertisementType.ordinal].add(subscriber)
+    fun <T> subscribe(subscriber: AdvertiseListener<T>, advertisementType: AdvertisementType) =
+        selectSubscribers<T>(advertisementType).add(subscriber)
 
-    fun unSubscribe(subscriber: AdvertiseListener, advertisementType: AdvertisementType) =
-        subscribers[advertisementType.ordinal].remove(subscriber)
+    fun <T> unSubscribe(subscriber: AdvertiseListener<T>, advertisementType: AdvertisementType) =
+        selectSubscribers<T>(advertisementType).remove(subscriber)
 
-    fun advertise(advertisement: Advertisement) =
-        subscribers[advertisement.type.ordinal].forEach { it.receiveData(advertisement) }
+    fun <T> advertise(advertisement: Advertisement<T>) =
+        selectSubscribers<T>(advertisement.type).forEach { it.receiveData(advertisement) }
+
+    private fun <T> selectSubscribers(advertisementType: AdvertisementType) =
+        (subscribers[advertisementType.ordinal] as MutableList<AdvertiseListener<T>>)
 }
