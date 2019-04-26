@@ -29,7 +29,7 @@ object ConnectionManager {
     fun loadComments(postId: Int) {
         cloud.postRunnable {
             val comments = WebserviceHelper.getComments(postId)
-            MyApplication.database.commentDao().nukeTable()
+            MyApplication.database.commentDao().deletPostComments(postId)
             MyApplication.database.commentDao().insertAll(*comments.map { commentResponse ->
                 with(commentResponse) {
                     CommentBean(postId, id!!, name, email, body)
