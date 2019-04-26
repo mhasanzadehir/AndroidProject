@@ -19,6 +19,13 @@ object MessageController {
         }
     }
 
+    fun fetchComments(postId: Int) {
+        thread(true) {
+            val comments = WebserviceHelper.getComments(postId)
+            Advertiser.advertise(Advertisement(AdvertisementType.COMMENTS_LOADED, comments))
+        }
+    }
+
     fun fetch(fromCache: Boolean = false) {
         if (fromCache) {
             StorageManager.load(last)
