@@ -8,35 +8,40 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ir.sharif.androidproject.models.Advertisement
+import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.webservice.WebserviceHelper
 import ir.sharif.androidproject.webservice.webservices.comments.CommentResponse
 import kotlinx.android.synthetic.main.activity_comments.*
 import kotlin.concurrent.thread
 
-class CommentsActivity : AppCompatActivity() {
+class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<CommentResponse>> {
+    override fun receiveData(advertisement: Advertisement<List<CommentResponse>>) {
+        runOnUiThread {
+            commentAdapter.replaceData(advertisement.data)
+        }
+    }
 
     private lateinit var commentAdapter: CommentAdapter
-    private var isInGridMode = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
+        val postId = intent.getIntExtra("postId", 1)
         title = "prj2"
         commentList.layoutManager = LinearLayoutManager(this)
         commentAdapter = CommentAdapter(arrayListOf())
         commentList.adapter = commentAdapter
-        fetchcomments()
-
+        fetchComments(postId)
     }
 
-    private fun fetchcomments() {
-        thread(true) {
-            val comments = WebserviceHelper.getComments(-1/*todo fill*/)
-            runOnUiThread {
-                commentAdapter.replaceData(comments)
-            }
-        }
+    override fun onResume() {
+        super.onResume()
+        Advertiser.subscribe(this, AdvertisementType.COMMENTS_LOADED)
     }
+
+    private fun fetchComments(postId:Int) = MessageController.fetchComments(postId)
+
 
     inner class CommentAdapter(private var commentList: ArrayList<CommentResponse>) : RecyclerView.Adapter<CommentViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
