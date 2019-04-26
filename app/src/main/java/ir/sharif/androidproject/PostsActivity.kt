@@ -12,6 +12,7 @@ import ir.sharif.androidproject.models.Advertisement
 import ir.sharif.androidproject.models.AdvertisementType
 import ir.sharif.androidproject.webservice.webservices.posts.PostResponse
 import kotlinx.android.synthetic.main.activity_posts.*
+import android.content.Intent
 
 
 class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<PostResponse>> {
@@ -72,6 +73,11 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
         override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
             holder.itemView.findViewById<TextView>(R.id.titleTextView).text = postList[position].title
             holder.itemView.findViewById<TextView>(R.id.bodyTextView).text = postList[position].body
+            holder.itemView.setOnClickListener {
+                val myIntent = Intent(baseContext, CommentsActivity::class.java)
+                myIntent.putExtra("commentId", postList[position].id)
+                startActivity(myIntent)
+            }
         }
 
         fun replaceData(posts: List<PostResponse>) {
