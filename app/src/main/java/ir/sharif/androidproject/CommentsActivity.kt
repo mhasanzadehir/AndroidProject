@@ -1,11 +1,12 @@
 package ir.sharif.androidproject
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.sharif.androidproject.models.Advertisement
@@ -15,12 +16,15 @@ import kotlinx.android.synthetic.main.activity_comments.*
 
 class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<CommentResponse>> {
     private lateinit var commentAdapter: CommentAdapter
+    private var commentsSize: Int = 1
+    private var postId: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comments)
-        val postId = intent.getIntExtra("postId", 1)
-        title = "prj2"
+        setSupportActionBar(commentsToolbar)
+        postId = intent.getIntExtra("postId", 1)
+        title = "comments"
         commentList.layoutManager = LinearLayoutManager(this)
         commentAdapter = CommentAdapter(arrayListOf())
         commentList.adapter = commentAdapter
@@ -32,12 +36,20 @@ class CommentsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<
         Advertiser.subscribe(this, AdvertisementType.COMMENTS_LOADED)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.comments_menu, menu)
+        return true
+    }
+
     private fun fetchComments(postId: Int) = MessageController.fetchComments(postId)
 
     override fun receiveData(advertisement: Advertisement<List<CommentResponse>>) {
         runOnUiThread {
             commentAdapter.replaceData(advertisement.data)
         }
+        commentsSize = advertisement.data.size
+        title = "Post " + postId + "," + commentsSize + " comments"
     }
 
     inner class CommentAdapter(private var commentList: ArrayList<CommentResponse>) :
