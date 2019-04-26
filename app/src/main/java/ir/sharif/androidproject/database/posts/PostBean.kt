@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 class PostBean(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    var id: String,
+    var id: Int,
     @ColumnInfo(name = "userId")
-    var userId: String? = null,
+    var userId: Int,
     @ColumnInfo(name = "title")
     var title: String? = null,
     @ColumnInfo(name = "body")
