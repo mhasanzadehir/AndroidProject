@@ -2,10 +2,8 @@ package ir.sharif.androidproject
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +32,17 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.posts_menu, menu)
+        menu?.findItem(R.id.gridSwitch)?.actionView?.findViewById<Switch>(R.id.switcher)?.setOnClickListener {
+            runOnUiThread {
+                if (isInGridMode) {
+                    postList.layoutManager = LinearLayoutManager(this)
+                    isInGridMode = false
+                } else {
+                    postList.layoutManager = GridLayoutManager(this, 3)
+                    isInGridMode = true
+                }
+            }
+        }
         return true
     }
 
@@ -52,6 +61,7 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
             postAdapter.replaceData(advertisement.data)
         }
     }
+
 
     inner class PostAdapter(private var postList: ArrayList<PostResponse>) : RecyclerView.Adapter<PostViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
