@@ -22,4 +22,7 @@ interface PostDao {
 
     @Delete
     fun delete(user: PostBean)
+
+    @Query("DELETE FROM Post")
+    fun nukeTable()
 }
