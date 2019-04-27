@@ -9,10 +9,13 @@
 
     <TextView
             android:id="@+id/titleTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:layout_alignParentTop="true"
             android:text="@string/title"
+
             android:textSize="24sp"
             android:textStyle="bold"/>
 
@@ -22,8 +25,18 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/titleTextView"
             android:text="@string/body"
+            android:maxLines="4"
+            android:ellipsize="end"
             android:textSize="14sp"
             android:textStyle="italic"/>
+
+    <Button
+            android:id="@+id/seeMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bodyTextView"
+            android:gravity="center"
+            android:text="@string/see_more"/>
 
 
 </RelativeLayout>

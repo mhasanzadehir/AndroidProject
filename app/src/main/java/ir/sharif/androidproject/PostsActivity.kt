@@ -1,9 +1,7 @@
 package ir.sharif.androidproject
 
 import android.app.AlertDialog
-import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
@@ -19,8 +17,7 @@ import kotlinx.android.synthetic.main.activity_posts.*
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
-import android.util.Log
-import java.util.logging.Logger
+import android.widget.Button
 
 
 class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<PostResponse>> {
@@ -29,11 +26,10 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_posts)
-        setSupportActionBar(postsToolbar)
+        this.setContentView(R.layout.activity_posts)
+        this.setSupportActionBar(postsToolbar)
         title = "Post Page"
         postList.layoutManager = LinearLayoutManager(this)
-//        postList.margin
         postAdapter = PostAdapter(arrayListOf())
         postList.adapter = postAdapter
         tryToConnect()
@@ -58,8 +54,7 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val dialogBuilder = AlertDialog.Builder(this)
-
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.Zeiny -> dialogBuilder.setMessage("Reza Zeiny 95 CE Sharif University of Technology.")
             R.id.Fatemi -> dialogBuilder.setMessage("Ali Reza Fatemi 95 CE Sharif University of Technology.")
             R.id.Hassanzadeh -> dialogBuilder.setMessage("Mahdi Hassanzade 95 CE Sharif University of Technology.")
@@ -70,6 +65,7 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
         dialogBuilder.setPositiveButton("OK") { dialog, _ ->
             dialog.cancel()
         }
+        //todo add this for all page and add loading for all page and check and change font for all page and see code and change it
 
         val alert = dialogBuilder.create()
         alert.setTitle("Person Info")
@@ -170,6 +166,18 @@ class PostsActivity : AppCompatActivity(), Advertiser.AdvertiseListener<List<Pos
         override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
             holder.itemView.findViewById<TextView>(R.id.titleTextView).text = postList[position].title
             holder.itemView.findViewById<TextView>(R.id.bodyTextView).text = postList[position].body
+            holder.itemView.findViewById<Button>(R.id.seeMore).setOnClickListener {
+                val dialogBuilder = AlertDialog.Builder(this@PostsActivity)
+
+                dialogBuilder.setMessage(postList[position].body)
+                    .setCancelable(true)
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.cancel()
+                    }
+                val alert = dialogBuilder.create()
+                alert.setTitle(postList[position].title)
+                alert.show()
+            }
             holder.itemView.setOnClickListener {
                 val myIntent = Intent(baseContext, CommentsActivity::class.java)
                 myIntent.putExtra("postId", postList[position].id)

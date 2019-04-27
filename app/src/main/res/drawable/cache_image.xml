@@ -3,6 +3,6 @@
     <item>
         <bitmap
                 android:gravity="center"
-                android:src="@android:drawable/presence_away"/>
+                android:src="@drawable/reza"/>
     </item>
 </layer-list>
